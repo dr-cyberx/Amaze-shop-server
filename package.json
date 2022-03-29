@@ -5,7 +5,11 @@
    "license": "MIT",
    "scripts": {
       "dev": "nodemon server/server.ts",
-      "start": "node dist/server/server.js"
+      "start": "node .build/server/server.js",
+      "postinstall": "tsc",
+      "watch-node": "nodemon .build/server/server.js",
+      "watch-ts": "tsc -w",
+      "deploy": "git add . && git commit -m Heroku && git push heroku master"
    },
    "devDependencies": {
       "@babel/preset-typescript": "^7.16.7",
