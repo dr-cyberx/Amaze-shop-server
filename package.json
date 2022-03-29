@@ -5,7 +5,7 @@
    "license": "MIT",
    "scripts": {
       "dev": "nodemon server/server.ts",
-      "start": "node .build/server/server.js",
+      "start": "ts-node .build/server/server.js",
       "postinstall": "tsc",
       "watch-node": "nodemon .build/server/server.js",
       "watch-ts": "tsc -w",
