@@ -16,3 +16,7 @@ connectDB(`${process.env.MongoDB_URL}`)
   .catch((err) => {
     console.log('failed to connect DB ', err);
   });
+
+app.get('/', (req, res) => {
+  res.json({ hello: 'hello' });
+});
