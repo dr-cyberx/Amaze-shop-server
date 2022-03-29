@@ -4,6 +4,7 @@
    "main": "server.js",
    "license": "MIT",
    "scripts": {
+      "postinstall": "tsc",
       "dev": "nodemon server/server.ts",
       "start": "ts-node server/server.ts"
    },
@@ -28,6 +29,7 @@
       "apollo-server-core": "^3.6.1",
       "apollo-server-errors": "^3.3.0",
       "apollo-server-express": "^3.6.1",
+      "ts-node": "^10.7.0",
       "bcrypt": "^5.0.1",
       "cors": "^2.8.5",
       "dotenv": "^10.0.0",
