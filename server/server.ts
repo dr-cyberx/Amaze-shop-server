@@ -9,10 +9,6 @@ dotenv.config();
 
 const app: Application = express();
 
-app.get('/', (req, res) => {
-  res.json({ hello: 'hello' });
-});
-
 connectDB(`${process.env.MongoDB_URL}`)
   .then(() => {
     startApolloServer(TypeDefs, Resolvers, app);
@@ -20,3 +16,7 @@ connectDB(`${process.env.MongoDB_URL}`)
   .catch((err) => {
     console.log('failed to connect DB ', err);
   });
+
+app.get('*', (req, res) => {
+  res.json({ hello: 'hello' });
+});
