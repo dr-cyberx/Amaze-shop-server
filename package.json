@@ -6,7 +6,8 @@
    "scripts": {
       "postinstall": "tsc",
       "dev": "nodemon server/server.ts",
-      "start": "ts-node server/server.ts"
+      "start": "ts-node .build/server/server.js",
+      "deploy": "git push heroku master"
    },
    "devDependencies": {
       "@babel/preset-typescript": "^7.16.7",

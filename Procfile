@@ -1,1 +1,1 @@
-web:ts-node/server/server.ts
+worker: node .build/server/server.js
