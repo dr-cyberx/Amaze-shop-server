@@ -17,6 +17,10 @@ connectDB(`${process.env.MongoDB_URL}`)
     console.log('failed to connect DB ', err);
   });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
+  res.json({ hello: 'hello' });
+});
+
+app.get('/favicon.ico', (req, res) => {
   res.json({ hello: 'hello' });
 });
