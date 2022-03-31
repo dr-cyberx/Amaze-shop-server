@@ -23,6 +23,7 @@ async function startApolloServer(
     resolvers,
     context: ({ req }) => ({ token: req.headers.authorization || null }),
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    introspection: true,
   });
 
   await server.start();
