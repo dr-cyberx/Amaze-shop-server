@@ -21,7 +21,7 @@ export const CreateProduct = async (
     }
     return amazeResponse('InValid User', null, true, 401);
   } catch (error) {
-    return amazeResponse(`${error}`, null, true, 404);
+    return amazeResponse(`something went wrong! ${error}`, null, true, 404);
   }
 };
 
