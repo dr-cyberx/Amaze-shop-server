@@ -16,7 +16,7 @@ const sendOtp = async (phoneNumber: number): Promise<string | null> => {
       .done();
     return `${OTP}`;
   } catch (error) {
-    console.log(error);
+    console.log('failed to send otp! ', error);
     return null;
   }
 };

@@ -16,6 +16,7 @@ const isValidUser = async (
     if (isUserExist?.email || isUserExist?.phoneNumber) {
       if (cb) {
         const res = await cb(...rest);
+        console.log('cb -> hitted', res);
         return { isValid: true, data: res, userId: isUserExist.id };
       }
 

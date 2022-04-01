@@ -8,6 +8,7 @@ import {
   verifyResponse,
   sendOtpToContacts,
 } from './auth/index';
+import { Cart, createCart, getCartByUserID } from './cart';
 import {
   createProduct,
   createProductInput,
@@ -24,6 +25,7 @@ const TypeDefs: DocumentNode = gql`
     hello: String!
     ${getAllUser}
     ${getAllProducts}
+    ${getCartByUserID}
     ${sendOtpToContacts}
   }
 
@@ -35,6 +37,7 @@ const TypeDefs: DocumentNode = gql`
   ${createProductInput}
   ${createProductResponse}
   ${verifyResponse}
+  ${Cart}
 
   type Mutation{
     ${Login}
@@ -42,6 +45,7 @@ const TypeDefs: DocumentNode = gql`
     ${verifyContacts}
     ${createProduct}
     ${updateProduct}
+    ${createCart}
   }
 `;
 

@@ -1,4 +1,5 @@
 import authMutations from './mutation/auth';
+import cartMutations from './mutation/cart';
 import ProductMutations from './mutation/Product';
 import otpQueries from './query/auth';
 import { productquery } from './query/Product';
@@ -14,6 +15,7 @@ const resolvers = {
   Mutation: {
     ...authMutations,
     ...ProductMutations,
+    ...cartMutations,
   },
 };
 

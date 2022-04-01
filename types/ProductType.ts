@@ -3,8 +3,9 @@ export interface TypeProduct {
   productDescription: string;
   productImage: string;
   productName: string;
+  productBrand: string;
   productPrice: string;
-  productRating: string;
+  productRating: string | number;
   productSeller: string;
 }
 

@@ -6,7 +6,7 @@ import { SingleuserType } from '../../types/userType';
 
 export const addToDB = async (
   modelName: typeof User,
-  args: SingleuserType,
+  args: any,
 ): Promise<any> => {
   const res: any = await new modelName(args).save();
   return res;
