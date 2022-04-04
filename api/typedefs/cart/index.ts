@@ -1,5 +1,5 @@
-export const createCart: string = `
-    createCart(userId: ID!, productId: ID!): cartResponse
+export const updateCart: string = `
+    addItemToCart(productId: ID!): cartResponse
 `;
 
 export const getCartByUserID: string = `
@@ -7,6 +7,7 @@ export const getCartByUserID: string = `
 `;
 
 export const Cart: string = `
+
     type cartResponse{
         data: cart
         error: Boolean!
@@ -15,11 +16,15 @@ export const Cart: string = `
     }
 
     type cart{
+        id: ID!
         userId: ID!
         products: [createProductResponse]!
     }
+
 `;
 
 const hi = 'hi';
 
 export default hi;
+
+// createCart(userId: ID!, productId: ID!): cartResponse

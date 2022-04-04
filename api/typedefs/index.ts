@@ -8,7 +8,7 @@ import {
   verifyResponse,
   sendOtpToContacts,
 } from './auth/index';
-import { Cart, createCart, getCartByUserID } from './cart';
+import { Cart, updateCart, getCartByUserID } from './cart';
 import {
   createProduct,
   createProductInput,
@@ -45,7 +45,7 @@ const TypeDefs: DocumentNode = gql`
     ${verifyContacts}
     ${createProduct}
     ${updateProduct}
-    ${createCart}
+    ${updateCart}
   }
 `;
 

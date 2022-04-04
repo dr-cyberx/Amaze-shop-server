@@ -4,11 +4,29 @@ import User from '../../db/models/User';
 import { TypeProduct } from '../../types/ProductType';
 import { SingleuserType } from '../../types/userType';
 
-export const addToDB = async (
-  modelName: typeof User,
-  args: any,
-): Promise<any> => {
+export const addToDB = async (modelName: any, args: any): Promise<any> => {
   const res: any = await new modelName(args).save();
+  return res;
+};
+
+export const updateArrayFieldDB = async (
+  modelName: any,
+  userId: any,
+  fieldToPush: any,
+  value: any,
+) => {
+  const res = await modelName.findOneAndUpdate(
+    { userId },
+    { $push: { [fieldToPush]: value } },
+    function (error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('success --> ', success);
+      }
+    },
+  );
+
   return res;
 };
 
@@ -50,6 +68,12 @@ export const findFromDB = async (
   if (otherCreds.email) {
     const res: Promise<SingleuserType> | any[] = await modelName.findOne({
       email: otherCreds.email,
+    });
+    return res;
+  }
+  if (otherCreds.userId) {
+    const res: Promise<SingleuserType> | any[] = await modelName.findOne({
+      userId: otherCreds.userId,
     });
     return res;
   }

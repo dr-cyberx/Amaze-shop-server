@@ -16,23 +16,23 @@ export const createProductInput: string = `input createProductInput{
 
 export const createProductResponse: string = `
 
-type createProductResponse{
-  id: ID!
-  productName: String!
-  productImage: String!
-  productDescription: String!
-  productBrand: String!
-  productPrice: String!
-  productSeller: String!
-  productRating: Float!
-}
+  type createProductResponse{
+    id: ID!
+    productName: String!
+    productImage: String!
+    productDescription: String!
+    productBrand: String!
+    productPrice: String!
+    productSeller: String!
+    productRating: Float!
+  }
 
-type createProductMutationResponse{
-  data: createProductResponse
-  error: Boolean!
-  message: String!
-  status: Int!
-}
+  type createProductMutationResponse{
+    data: createProductResponse
+    error: Boolean!
+    message: String!
+    status: Int!
+  }
 
 `;
 
