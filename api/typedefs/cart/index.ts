@@ -1,9 +1,10 @@
 export const updateCart: string = `
     addItemToCart(productId: ID!): cartResponse
+    removeItemFromCart(productId: ID!): cartResponse
 `;
 
 export const getCartByUserID: string = `
-    getCartByUserID(userId: ID!): cartResponse
+    getCartByUserID: cartResponse
 `;
 
 export const Cart: string = `
@@ -18,6 +19,7 @@ export const Cart: string = `
     type cart{
         id: ID!
         userId: ID!
+        productCount: Int!
         products: [createProductResponse]!
     }
 

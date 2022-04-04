@@ -6,37 +6,36 @@ import isValidUser from '../utils/isValid';
 import { addToDB, findFromDB, updateArrayFieldDB } from '../utils/shared';
 import { amazeResponse } from '../utils/shared/responses';
 
-// export const CreateCart = async (args: any, token: any): Promise<any> => {
-//   try {
-//     const { isValid, userId } = await isValidUser(null, token);
-//     if (isValid) {
-//       const data = await addToDB(Cart, {
-//         userId,
-//         products: [args.productId],
-//       });
-//       if (data.products) {
-//         const res: any = await Promise.all(
-//           data.products.map((product: any) => findFromDB(Product, 'One', { id: product })),
-//         );
-//         return amazeResponse(
-//           'Cart created successfully!',
-//           {
-//             userId,
-//             products: res,
-//           },
-//           false,
-//           200,
-//         );
-//       }
-
-//       return amazeResponse('Cart created successfully!', data, false, 200);
-//     }
-
-//     return amazeResponse('InValid User', null, true, 401);
-//   } catch (error) {
-//     return amazeResponse(`something went wrong! ${error}`, null, true, 404);
-//   }
-// };
+export const GetCartByUserID = async (
+  token: any,
+): Promise<IGetAllData | Type_Create_Update_Product> => {
+  try {
+    const { isValid, userId } = await isValidUser(null, token);
+    if (isValid) {
+      const isExist: any = await findFromDB(Cart, 'One', { userId });
+      if (isExist) {
+        const { products } = await Cart.findOne({ userId }).populate(
+          'products',
+        );
+        return amazeResponse(
+          'Cart fetched successfully!',
+          {
+            id: isExist.id,
+            userId,
+            productCount: products.length,
+            products,
+          },
+          false,
+          200,
+        );
+      }
+      return amazeResponse('Cart not found !', null, true, 404);
+    }
+    return amazeResponse('InValid User', null, true, 401);
+  } catch (error) {
+    return amazeResponse(`something went wrong! ${error}`, null, true, 404);
+  }
+};
 
 export const AddItemToCart = async (
   args: any,
@@ -74,10 +73,11 @@ export const AddItemToCart = async (
         );
 
         return amazeResponse(
-          'Cart created successfully!',
+          'Added item to created successfully!',
           {
             id: updateExistingCart.id,
             userId,
+            productCount: products.length,
             products,
           },
           false,
@@ -98,7 +98,36 @@ export const RemoveItemFromCart = async (
 ): Promise<IGetAllData | Type_Create_Update_Product> => {
   try {
     const { isValid, userId } = await isValidUser(null, token);
-    return amazeResponse('InValid User', null, true, 401);
+    if (isValid) {
+      const isExist = await Cart.find({
+        products: {
+          $in: [args.productId],
+        },
+      });
+      if (isExist) {
+        const res = await Cart.findOneAndUpdate(
+          { userId },
+          { $pull: { products: args.productId } },
+          { new: true },
+        );
+        const { products } = await Cart.findOne({ userId }).populate(
+          'products',
+        );
+        return amazeResponse(
+          'Item Removed from Cart successfully!',
+          {
+            id: res.id,
+            userId,
+            productCount: products.length,
+            products,
+          },
+          false,
+          200,
+        );
+      }
+      return amazeResponse('Product not exist in cart!', null, true, 401);
+    }
+    return amazeResponse('Invalid User!', null, true, 401);
   } catch (error) {
     return amazeResponse(`something went wrong! ${error}`, null, true, 404);
   }
