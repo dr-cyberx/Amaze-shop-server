@@ -27,7 +27,8 @@
     "func-names": "off",
     "prefer-arrow-callback": "off",
     "operator-linebreak": "warn",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-unused-vars":"warn"
   },
   "settings": {
     "import/resolver": {

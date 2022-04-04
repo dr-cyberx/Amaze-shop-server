@@ -18,13 +18,6 @@ export const updateArrayFieldDB = async (
   const res = await modelName.findOneAndUpdate(
     { userId },
     { $push: { [fieldToPush]: value } },
-    function (error, success) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('success --> ', success);
-      }
-    },
   );
 
   return res;

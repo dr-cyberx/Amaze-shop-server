@@ -46,15 +46,13 @@ export const AddItemToCart = async (args: any, token: any): Promise<any> => {
           userId,
           products: [args.productId],
         });
-        const result = await Promise.all(
-          addNewCart.products.map((item: any) => findFromDB(Product, 'One', { id: item })),
+
+        const { products } = await Cart.findOne({ userId }).populate(
+          'products',
         );
-
-        console.log('addNewCart -> ', addNewCart);
-
         return amazeResponse(
           'Cart created successfully!',
-          { id: addNewCart.id, userId, products: result },
+          { id: addNewCart.id, userId, products },
           false,
           200,
         );
@@ -66,15 +64,16 @@ export const AddItemToCart = async (args: any, token: any): Promise<any> => {
         args.productId,
       );
       if (updateExistingCart.products) {
-        const res: any = await Promise.all(
-          updateExistingCart.products.map((product: any) => findFromDB(Product, 'One', { id: product })),
+        const { products } = await Cart.findOne({ userId }).populate(
+          'products',
         );
+
         return amazeResponse(
           'Cart created successfully!',
           {
             id: updateExistingCart.id,
             userId,
-            products: res,
+            products,
           },
           false,
           200,
