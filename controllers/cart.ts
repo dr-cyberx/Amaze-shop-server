@@ -1,5 +1,4 @@
 import Cart from '../db/models/cart';
-import Product from '../db/models/Product';
 import { IGetAllData } from '../types/authType';
 import { Type_Create_Update_Product } from '../types/ProductType';
 import isValidUser from '../utils/isValid';
