@@ -13,6 +13,7 @@ const cartMutations = {
     const cart = await AddItemToCart(args, token);
     return cart;
   },
+
   removeItemFromCart: async (
     _parent: any,
     args: any,

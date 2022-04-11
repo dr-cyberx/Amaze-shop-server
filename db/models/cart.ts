@@ -13,8 +13,8 @@ const CartSchema: mongoose.Schema<
     },
     products: [
       {
-        type: mongoose.Types.ObjectId,
-        ref: 'Product',
+        productId: { type: mongoose.Types.ObjectId, ref: 'Product' },
+        qty: { type: Number, required: true, default: 1 },
       },
     ],
   },
