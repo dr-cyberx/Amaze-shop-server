@@ -1,5 +1,11 @@
+import {
+  addQtyToProduct,
+  appendNewCartProduct,
+  populateCartProductId,
+} from '../DAO/CartOperations';
 import Cart from '../db/models/cart';
 import { IGetAllData } from '../types/authType';
+import { TypeProductInCart, TypeReturnProductInCart } from '../types/cartType';
 import { Type_Create_Update_Product } from '../types/ProductType';
 import isValidUser from '../utils/isValid';
 import { addToDB, findFromDB, updateArrayFieldDB } from '../utils/shared';
@@ -45,79 +51,32 @@ export const AddItemToCart = async (
     if (isValid) {
       const isAlreadyExist: any = await findFromDB(Cart, 'One', { userId });
       if (!isAlreadyExist) {
-        const addNewCart = await addToDB(Cart, {
+        await addToDB(Cart, {
           userId,
           products: [{ productId: args.productId, qty: 1 }],
         });
 
-        const { products } = await Cart.findOne({ userId }).populate(
-          'products',
-        );
-        return amazeResponse(
-          'Cart created successfully!',
-          { id: addNewCart.id, userId, products },
-          false,
-          200,
-        );
+        return populateCartProductId(userId);
       }
 
-      const productArray = isAlreadyExist?.products.find(
+      const isProductExits: TypeProductInCart = isAlreadyExist?.products.find(
         (d: any) => d.productId == args.productId,
       );
 
-      console.log('productArray ->', productArray);
-
-      if (productArray) {
-        const UpdatedCartRes = await Cart.update(
-          { 'products.productId': productArray.productId },
-          {
-            $set: {
-              'products.$.qty': productArray.qty + 1,
-            },
-          },
-        );
-
-        const returnResp: any = await findFromDB(Cart, 'One', { userId });
-        console.log('returnResp => ', returnResp);
-        return amazeResponse(
-          'Added item to created successfully!',
-          {
-            id: returnResp.id,
-            userId,
-            productCount: returnResp.products.length,
-            products: returnResp.products,
-          },
-          false,
-          200,
-        );
-        // console.log('UpdatedCartRes --> ', UpdatedCartRes);
-        // const newObj = { productId: args.productId, qty: productArray.length };
-
-        // const updateExistingCart = await updateArrayFieldDB(
-        //   Cart,
-        //   userId,
-        //   'products',
-        //   newObj,
-        // );
-        // console.log('updateExistingCart => ', updateExistingCart);
-        // if (updateExistingCart.products) {
-        //   return amazeResponse(
-        //     'Added item to created successfully!',
-        //     {
-        //       id: updateExistingCart.id,
-        //       userId,
-        //       productCount: updateExistingCart.products.length,
-        //       products: updateExistingCart.products,
-        //     },
-        //     false,
-        //     200,
-        //   );
-        // }
+      if (isProductExits) {
+        await addQtyToProduct(isProductExits);
+        return populateCartProductId(userId);
       }
 
-      return amazeResponse('Cart not found !', null, true, 404);
+      const appendNewProduct: TypeReturnProductInCart =
+        await appendNewCartProduct(userId, args.productId);
+
+      if (appendNewProduct.products) {
+        return populateCartProductId(userId);
+      }
+      return amazeResponse('Product add failed !', null, true, 404);
     }
-    return amazeResponse('InValid User', null, true, 401);
+    return amazeResponse('Cart not found !', null, true, 404);
   } catch (error) {
     return amazeResponse(`something went wrong! ${error}`, null, true, 404);
   }

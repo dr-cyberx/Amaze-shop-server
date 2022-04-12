@@ -28,7 +28,8 @@
     "prefer-arrow-callback": "off",
     "operator-linebreak": "warn",
     "camelcase": "off",
-    "no-unused-vars":"warn"
+    "no-unused-vars": "warn",
+    "eqeqeq": "off"
   },
   "settings": {
     "import/resolver": {

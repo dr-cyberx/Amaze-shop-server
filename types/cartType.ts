@@ -10,3 +10,14 @@ export interface TypeCart {
 export interface TypeCartResponse extends commonResponse {
   data: TypeCart;
 }
+
+export interface TypeProductInCart {
+  qty: number;
+  id: string;
+  productId: string;
+}
+export interface TypeReturnProductInCart {
+  id: string;
+  userId: string;
+  products: Array<TypeProductInCart>;
+}

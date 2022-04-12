@@ -52,7 +52,7 @@ export const findFromDB = async (
   modelName: typeof User,
   filter: 'All' | 'One',
   otherCreds?: any,
-): Promise<any[] | SingleuserType | SingleuserType[] | TypeProduct[]> => {
+): Promise<any> => {
   if (filter === 'All') {
     const res: Promise<SingleuserType[]> | any[] | null = await modelName.find(
       {},
@@ -60,13 +60,13 @@ export const findFromDB = async (
     return res;
   }
   if (otherCreds.email) {
-    const res: Promise<SingleuserType> | any[] = await modelName.findOne({
+    const res: any = await modelName.findOne({
       email: otherCreds.email,
     });
     return res;
   }
   if (otherCreds.userId) {
-    const res: Promise<SingleuserType> | any[] = await modelName.findOne({
+    const res: any = await modelName.findOne({
       userId: otherCreds.userId,
     });
     return res;

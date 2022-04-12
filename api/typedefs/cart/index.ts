@@ -16,11 +16,18 @@ export const Cart: string = `
         status: Int!
     }
 
+    type cartProductResp{
+        id: ID!
+        qty: Int!
+        productId: createProductResponse
+        
+    }
+
     type cart{
         id: ID!
         userId: ID!
         productCount: Int!
-        products: [createProductResponse]!
+        products: [cartProductResp]!
     }
 
 `;
