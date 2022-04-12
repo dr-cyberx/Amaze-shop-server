@@ -45,5 +45,3 @@ export const appendNewCartProduct = async (userId: string, productId) => {
   );
   return appendedArrayFields;
 };
-
-export const hi = 'hi';
