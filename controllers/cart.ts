@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 import {
   addQtyToProduct,
   appendNewCartProduct,
@@ -89,31 +91,46 @@ export const RemoveItemFromCart = async (
   try {
     const { isValid, userId } = await isValidUser(null, token);
     if (isValid) {
-      const isExist = await Cart.find({
-        products: {
-          $in: [args.productId],
-        },
-      });
-      if (isExist) {
-        const res = await Cart.findOneAndUpdate(
-          { userId },
-          { $pull: { products: args.productId } },
-          { new: true },
-        );
-        const { products } = await Cart.findOne({ userId }).populate(
-          'products',
-        );
-        return amazeResponse(
-          'Item Removed from Cart successfully!',
-          {
-            id: res.id,
-            userId,
-            productCount: products.length,
-            products,
-          },
-          false,
-          200,
-        );
+      const { products } = await Cart.findOne({ userId });
+      console.log('products --> ', products);
+      if (products) {
+        const isExist = products.find((product: any) => {
+          console.log(product.productId, ' ---- ', args.productId);
+          return null;
+        });
+
+        if (isExist) {
+          const res = await Cart.updateOne(
+            { userId },
+            {
+              $pull: {
+                products: { productId: args.productId },
+              },
+            },
+          );
+          const res1 = await Cart.findOne({ userId });
+          console.log('res1 -> ', res1);
+        }
+        // const res = await Cart.findOneAndUpdate(
+        //   { userId },
+        //   { $pull: { products: args.productId } },
+        //   { new: true },
+        // );
+        // const { products } = await Cart.findOne({ userId }).populate(
+        //   'products',
+        // );
+        // return amazeResponse(
+        //   'Item Removed from Cart successfully!',
+        //   {
+        //     id: res.id,
+        //     userId,
+        //     productCount: products.length,
+        //     products,
+        //   },
+        //   false,
+        //   200,
+        // );
+        return null;
       }
       return amazeResponse('Product not exist in cart!', null, true, 401);
     }
