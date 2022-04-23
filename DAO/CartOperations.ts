@@ -2,15 +2,18 @@ import Cart from '../db/models/cart';
 import { updateArrayFieldDB } from '../utils/shared';
 import { amazeResponse } from '../utils/shared/responses';
 
-export const populateCartProductId = async (userId: string) => {
+export const populateCartProductId = async (
+  userId: string,
+  message: string,
+) => {
   const newCartProducts = await Cart.findOne({ userId })
     .populate({
       path: 'products.productId',
     })
     .exec();
-
+  console.log(newCartProducts.products);
   return amazeResponse(
-    'Added item to created successfully!',
+    message,
     {
       id: newCartProducts.id,
       userId,
@@ -28,6 +31,17 @@ export const addQtyToProduct = async (isProductExists: any) => {
     {
       $set: {
         'products.$.qty': isProductExists.qty + 1,
+      },
+    },
+  );
+};
+
+export const subQtyToProduct = async (productId: any, qty: any) => {
+  await Cart.updateOne(
+    { 'products.productId': productId },
+    {
+      $set: {
+        'products.$.qty': qty - 1,
       },
     },
   );
