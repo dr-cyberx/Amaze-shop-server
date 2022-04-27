@@ -6,6 +6,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    imageUrl: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
@@ -46,6 +49,9 @@ const userSchema = new Schema(
           type: String,
         },
         street: {
+          type: String,
+        },
+        landmark: {
           type: String,
         },
       },

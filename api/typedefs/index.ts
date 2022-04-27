@@ -17,7 +17,7 @@ import {
   getAllProducts,
   updateProduct,
 } from './Product';
-import getAllUser from './user/query';
+import { getAllUser, updateUser } from './user/query';
 import { getAllUserResponse, newUser, userRole } from './user/types';
 
 const TypeDefs: DocumentNode = gql`
@@ -42,6 +42,7 @@ const TypeDefs: DocumentNode = gql`
   type Mutation{
     ${Login}
     ${signUp}
+    ${updateUser}
     ${verifyContacts}
     ${createProduct}
     ${updateProduct}

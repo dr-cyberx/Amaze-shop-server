@@ -33,7 +33,7 @@ export const delFromDB = async (
 };
 
 export const UpdateToDB = async (
-  modelName: typeof User,
+  modelName: any,
   Id: string | any,
   fields: any,
   shouldNew: boolean = true,

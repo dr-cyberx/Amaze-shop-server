@@ -1,6 +1,8 @@
-const getAllUser = `
+export const getAllUser = `
 getAllUser(query: String): getAllUserResponse!
-getUserDetailsByID(userId: ID!): userDetail!
+getUserDetailsByID: userDetail!
 `;
 
-export default getAllUser;
+export const updateUser = `
+    updateUser(input: userInput!): userDetail!
+`;

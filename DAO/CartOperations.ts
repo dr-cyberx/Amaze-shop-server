@@ -11,7 +11,6 @@ export const populateCartProductId = async (
       path: 'products.productId',
     })
     .exec();
-  console.log(newCartProducts.products);
   return amazeResponse(
     message,
     {

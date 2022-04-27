@@ -4,7 +4,26 @@ export const newUser: string = `
     houseNumber: String
     city: String
     street: String
+    landmark: String
   }
+
+  input inputAddress{
+    houseNumber: String
+    city: String
+    street: String
+    landmark: String
+  }
+
+  input userInput{
+    userName: String
+    email: String
+    isPhoneVerified: Boolean
+    isEmailVerified: Boolean
+    password: String
+    phoneNumber: String
+    address: [inputAddress]
+    role:String
+}
 
   type newUser{
     id: ID!
