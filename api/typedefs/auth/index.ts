@@ -1,5 +1,6 @@
 export const Login: String = `
 login(userName: String, email: String, phoneNumber: String, password: String) : authResponse!
+changePassword(oldPassword: String!, newPassword: String!): userDetail! 
 `;
 
 export const signUp: String = `

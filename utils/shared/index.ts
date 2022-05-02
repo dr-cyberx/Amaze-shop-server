@@ -66,9 +66,11 @@ export const findFromDB = async (
     return res;
   }
   if (otherCreds.userId) {
+    console.log('inside main func -> ', otherCreds.userId);
     const res: any = await modelName.findOne({
       userId: otherCreds.userId,
     });
+    console.log('inside main func -> ', otherCreds.res);
     return res;
   }
   if (otherCreds.id) {

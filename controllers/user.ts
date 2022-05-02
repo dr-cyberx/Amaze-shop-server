@@ -40,7 +40,6 @@ export const UpdateUser = async (
   args: any,
 ): Promise<IGetAllData | Type_Create_Update_Product> => {
   try {
-    console.log(args.input);
     const { isValid, userId } = await isValidUser(null, token);
     if (isValid) {
       const updatedUser: any = await UpdateToDB(

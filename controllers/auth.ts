@@ -1,17 +1,24 @@
+import { ApolloError } from 'apollo-server-errors';
 import { sign } from 'jsonwebtoken';
 import { hash, compare } from 'bcrypt';
 import { SingleuserType } from '../types/userType';
 import User from '../db/models/User';
 import { addToDB, findFromDB, UpdateToDB } from '../utils/shared';
-import { authResponse, verifiedResponse } from '../utils/shared/responses';
+import {
+  amazeResponse,
+  authResponse,
+  verifiedResponse,
+} from '../utils/shared/responses';
 import {
   IauthResolver,
+  IGetAllData,
   IisValidUser,
   IVerifiedResponse,
 } from '../types/authType';
 import isValidUser from '../utils/isValid';
 import sendOtp from '../utils/sendOtp';
 import sendOtpMail from '../utils/sendOtpMail';
+import { Type_Create_Update_Product } from '../types/ProductType';
 
 export const SignUp = async (args: SingleuserType): Promise<IauthResolver> => {
   try {
@@ -160,5 +167,47 @@ export const VerifyEmail = async (
     return verifiedResponse('Invalid user!');
   } catch (error) {
     return verifiedResponse('Something went wrong!');
+  }
+};
+
+export const ChangePassword = async (
+  token: String,
+  args: any,
+): Promise<IGetAllData | Type_Create_Update_Product> => {
+  try {
+    const { isValid, userId } = await isValidUser(null, token);
+    if (isValid) {
+      const isUserExist: any = await findFromDB(User, 'One', { id: userId });
+      if (isUserExist?.email) {
+        const comparePassword: boolean = await compare(
+          args?.oldPassword,
+          isUserExist?.password,
+        );
+        if (comparePassword) {
+          console.log(' -> 6 ');
+          const password: string = await hash(args?.newPassword, 12);
+          const { _id: id, ...rest } = await UpdateToDB(
+            User,
+            userId,
+            {
+              password,
+            },
+            true,
+          );
+          console.log(' -> 8 ');
+          console.log('updatedPasswordResp -> ', { id, rest });
+          return amazeResponse(
+            'Password Changed successfully!',
+            { id, ...rest },
+            false,
+            200,
+          );
+        }
+        return amazeResponse('Invalid old password!');
+      }
+    }
+    return amazeResponse('InValid User');
+  } catch (err) {
+    return amazeResponse(`failed to fetch ${new ApolloError(err)}`);
   }
 };

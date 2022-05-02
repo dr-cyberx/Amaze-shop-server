@@ -47,7 +47,7 @@ export const getAllUserResponse: string = `
  }
 
  type userDetail{
-  data: newUser!
+  data: newUser
   error: Boolean
   status: Int!
   message: String!
