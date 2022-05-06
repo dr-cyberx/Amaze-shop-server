@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
+    profileImage: {
+      type: Number,
+      required: false,
+      default: 9,
+    },
     userName: {
       type: String,
       required: true,
