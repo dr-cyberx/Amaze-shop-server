@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import Product from '../db/models/Product';
 import { IGetAllData } from '../types/authType';
 import { Type_Create_Update_Product } from '../types/ProductType';
@@ -87,6 +88,47 @@ export const GetProductById = async (
     return amazeResponse('Invalid User!');
   } catch (error) {
     return amazeResponse('something went wrong!');
+  }
+};
+
+export const BulkImport = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const productCsv = req.body.csvFile;
+  const bulkProductArray = [];
+  let isError: boolean = true;
+
+  productCsv.forEach((element: any) => {
+    if (element.length > 2) {
+      bulkProductArray.push({
+        productName: element[0],
+        productImage: element[1],
+        productDescription: element[2],
+        productPrice: element[3],
+        productSeller: element[4],
+        productBrand: element[5],
+        productRating: element[6],
+      });
+    }
+  });
+
+  Product.insertMany(bulkProductArray)
+    .then((): void => {
+      isError = false;
+    })
+    .catch((err: any): void => {
+      console.log(err);
+      isError = true;
+    });
+
+  const allProducts = await findFromDB(Product, 'All');
+  if (isError) {
+    res.json(amazeResponse('Bulk import failed', null, true, 400));
+  } else {
+    res.json(
+      amazeResponse('Bulk import successfully', allProducts, false, 200),
+    );
   }
 };
 
