@@ -29,6 +29,7 @@ export const newUser: string = `
     id: ID!
     userName: String
     email: String
+    profileImage: Int
     isPhoneVerified: Boolean
     isEmailVerified: Boolean
     password: String
