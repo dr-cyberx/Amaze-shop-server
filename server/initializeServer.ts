@@ -9,13 +9,6 @@ async function startApolloServer(
   resolvers: any,
   app: Application,
 ) {
-  const corsOptions = {
-    origin: '*',
-    credential: true,
-  };
-
-  app.use(cors(corsOptions));
-
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer({

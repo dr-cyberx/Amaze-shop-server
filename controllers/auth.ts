@@ -194,8 +194,6 @@ export const ChangePassword = async (
             },
             true,
           );
-          console.log(' -> 8 ');
-          console.log('updatedPasswordResp -> ', { id, rest });
           return amazeResponse(
             'Password Changed successfully!',
             { id, ...rest },
