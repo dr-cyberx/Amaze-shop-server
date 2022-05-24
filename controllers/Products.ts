@@ -132,4 +132,15 @@ export const BulkImport = async (
   }
 };
 
+export const productCsvExport = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const allProducts: any = await findFromDB(Product, 'All');
+  if (Array.isArray(allProducts)) {
+    const productArray: any[] = allProducts.map((d) => ({ ...d._doc }));
+    res.status(200).json({ data: productArray });
+  }
+};
+
 export const hi = 'hllo';

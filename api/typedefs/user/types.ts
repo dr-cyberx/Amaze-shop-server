@@ -20,13 +20,14 @@ export const newUser: string = `
     isPhoneVerified: Boolean
     isEmailVerified: Boolean
     password: String
+    profileImage: Int
     phoneNumber: String
     address: [inputAddress]
     role:String
 }
 
   type newUser{
-    id: ID!
+    id: ID! 
     userName: String
     email: String
     profileImage: Int
