@@ -12,6 +12,7 @@ export const createProductInput: string = `input createProductInput{
   productPrice: String!
   productSeller: String!
   productRating: Float!
+  tags: String!
 }`;
 
 export const createProductResponse: string = `
@@ -25,6 +26,7 @@ export const createProductResponse: string = `
     productPrice: String!
     productSeller: String!
     productRating: Float!
+    tags: String!
   }
 
   type createProductMutationResponse{

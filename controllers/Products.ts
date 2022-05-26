@@ -109,6 +109,7 @@ export const BulkImport = async (
         productSeller: element[4],
         productBrand: element[5],
         productRating: element[6],
+        tags: element[7],
       });
     }
   });

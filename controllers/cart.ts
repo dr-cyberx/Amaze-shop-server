@@ -21,14 +21,12 @@ export const GetCartByUserID = async (
     if (isValid) {
       const isExist: any = await findFromDB(Cart, 'One', { userId });
       if (isExist) {
-        // const products = await Cart.findOne({ userId }).populate('productId');
-        // console.log('products -> ', products);
         return populateCartProductId(
           userId,
           'Fetched Product By Id successfully!',
         );
       }
-      return amazeResponse('Cart not found !', null, true, 404);
+      return amazeResponse('Cart is empty !', [], false, 200);
     }
     return amazeResponse('InValid User', null, true, 401);
   } catch (error) {
