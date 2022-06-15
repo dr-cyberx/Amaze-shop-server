@@ -54,6 +54,13 @@ export const getAllUserResponse: string = `
   status: Int!
   message: String!
  }
+
+ type useraddresses{
+  data: [address]!
+  error: Boolean
+  status: Int!
+  message: String!
+ }
 `;
 
 export const userRole: string = `

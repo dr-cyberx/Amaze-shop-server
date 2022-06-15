@@ -5,13 +5,14 @@ import { changePassword, updateUser } from './mutation/user';
 import otpQueries from './query/auth';
 import { getCartByUserID } from './query/cart';
 import { productquery } from './query/Product';
-import { getAllUser, getUserDetailsByID } from './query/user';
+import { getAddress, getAllUser, getUserDetailsByID } from './query/user';
 
 const resolvers = {
   Query: {
     hello: () => 'hello world ',
     getAllUser,
     getUserDetailsByID,
+    getAddress,
     getCartByUserID,
     ...productquery,
     ...otpQueries,
