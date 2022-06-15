@@ -39,6 +39,11 @@ const OrderSchema: mongoose.Schema<
       type: String,
       required: true,
     },
+    isPaid: {
+      type: String,
+      enum: ['0', '1'],
+      default: '0',
+    },
     status: {
       type: String,
       enum: ['1', '2', '3'],

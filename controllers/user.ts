@@ -61,4 +61,29 @@ export const UpdateUser = async (
   }
 };
 
+export const GetAddress = async (
+  token: String,
+): Promise<IGetAllData | Type_Create_Update_Product> => {
+  try {
+    const { userId, isValid } = await isValidUser(null, token);
+    console.log(' userId, isValid  -> ', userId, isValid, token);
+    if (isValid) {
+      const addresses: any = await User.find({ _id: userId })
+        .select(
+          'address.houseNumber address.city address.street address.landmark',
+        )
+        .exec();
+      console.log('addresses -> ', [...addresses[0].address]);
+      return amazeResponse(
+        'fetched Successfully',
+        [...addresses[0].address],
+        false,
+        200,
+      );
+    }
+    return amazeResponse('InValid User');
+  } catch (err) {
+    return amazeResponse(`failed to fetch ${new ApolloError(err)}`);
+  }
+};
 export const hyy: string = 'hii';
